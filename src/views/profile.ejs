@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/7276da8489.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/lb.css">
+    <script defer src="js/lb.js"></script>
+    <title>Profile - Instagram | v2.0</title>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="navWrapp">
+                <div class="logo"><a href="/"><h2>Instagram</h2></a></div>
+                <div class="buscar">
+                    <form action="">
+                        <input type="text" placeholder="Buscar">
+                    </form>
+                </div>
+                <div class="userAccion">
+                    <i class="fas fa-home" style="color: #f5f5f5;"></i>
+                    <i class="far fa-comment"></i>
+                    <i class="far fa-compass"></i>
+                    <i class="far fa-heart"></i>
+                    <%if (user){%>
+                    <div class="profileLinkWrapp">
+                        <button class="profileLink">
+                        <img src="img/<%= user.userImg %>" class="imgFit">
+                        </button>
+                        <div class="profileLinkMenu">
+                            <a href="/users/logout" class="item">Cerrar sesion</a>
+                        </div>
+                    </div>
+                    <%} else{%>
+                    <div>
+                        Inicia sesion
+                    </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <div class="container">
+            
+            <div class="profileWrapp">
+                <div class="profileImgWrapp">
+                    <div class="profileUserImg">
+                        <img src="img/<%= result.userImg %>" class="imgFit">
+                    </div>
+                </div>
+                <div class="profileUserBio">
+                    <div class="profileAccion">
+                        <h1><%= result.name %></h1>
+                        <button>Enviar mensaje</button>
+                        <button><i class="fas fa-home"></i></button>
+                        <% if (user && user.name == result.name){%>
+                        <button><a href="users/editUser/<%= user.id %>">Edit</a></button>
+                        <%}%>
+                        <div><b>...</b></div>
+                    </div>
+                    <div class="followers">
+                        <div>1,200 posts</div>
+                        <div>340,k seguidores</div>
+                        <div>234 seguidos</div>
+                    </div>
+                    <div>
+                        <b><%= result.fullname %></b>
+                        <br>
+                        <span>
+                            <%= result.bio %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profileStories"></div>
+            <div class="profileFeed">
+                <div class="profileFeedHeader">
+                    <div class="btn">Publicaciones</div>
+                    <div class="btn">Reels</div>
+                    <div class="btn">IGTV</div>
+                    <div class="btn">Etiquetados</div>
+                </div>
+                <div class="feedWrapp">
+                    <!--row-->
+                    <% for(var i = 0; i < result.posts.length; i++) {%>
+                        <% if (i < result.posts.length){%>
+                    <div class="row">
+                        <div class="itemFeed">
+                            <div class="itemPreview">
+                                <div>
+                                    <i class="fas fa-heart"></i><span>1,234</span>
+                                    <i class="far fa-comment"></i><span>345</span>
+                                </div>
+                            </div>
+                            <img src="img/<%= result.posts[i].imgPost %>" class="imgFit lb">
+                        </div>
+                        <%} (i++)%>
+                        <% if (i < result.posts.length){%>
+                        <div class="itemFeed">
+                            <div class="itemPreview">
+                                <div>
+                                    <i class="fas fa-heart"></i><span>1,234</span>
+                                    <i class="far fa-comment"></i><span>345</span>
+                                </div>
+                            </div>
+                            <img src="img/<%= result.posts[i].imgPost %>" class="imgFit lb">
+                        </div>
+                        <%} (i++)%>
+                        <% if (i < result.posts.length){%>
+                        <div class="itemFeed" style="margin-right: 0 !important">
+                            <div class="itemPreview">
+                                <div>
+                                    <i class="fas fa-heart"></i><span>1,234</span>
+                                    <i class="far fa-comment"></i><span>345</span>
+                                </div>
+                            </div>
+                            <img src="img/<%= result.posts[i].imgPost %>" class="imgFit lb">
+                        </div>
+                        <%}%>
+                    </div>
+                    <%}%>
+                    <!--fin row-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

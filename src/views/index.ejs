@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/7276da8489.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Instagram | v2.0</title>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="navWrapp">
+                <div class="logo"><a href="/"><h2>Instagram</h2></a></div>
+                <div class="buscar">
+                    <form action="">
+                        <input type="text" placeholder="Buscar">
+                    </form>
+                </div>
+                <div class="userAccion">
+                    <i class="fas fa-home" style="color: #f5f5f5;"></i>
+                    <i class="far fa-comment"></i>
+                    <i class="far fa-compass"></i>
+                    <i class="far fa-heart"></i>
+                    <div class="profileLinkWrapp">
+                        <button class="profileLink">
+                        <img src="img/<%= user.userImg %>" class="imgFit">
+                        </button>
+                        <div class="profileLinkMenu">
+                            <a href="/<%= user.name %>" class="item">Perfil</a>
+                            <a href="/users/logout" class="item">Cerrar sesion</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <div class="container" style="display: flex; justify-content: space-between;">
+            <div class="mainWrapp">
+                <div class="stories">
+                    <div class="storiesWrapp">
+                        <div class="individualStorie">
+                            <div class="imgStorie">
+                                <img src="https://instagram.fcor2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/123555198_140499881141144_3390590661529180180_n.jpg?_nc_ht=instagram.fcor2-2.fna.fbcdn.net&_nc_ohc=Wtr9h32reTcAX_tm20H&tp=1&oh=cad0b3821663464f78bc48d96a2365b1&oe=6059DDB2" class="imgFit">
+                            </div>
+                            <div class="usernameStorie">
+                                clairo
+                            </div>
+                        </div>
+                        <div class="individualStorie">
+                            <div class="imgStorie">
+                                <img src="https://instagram.fcor2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/90345176_220805358977004_3479589203921076224_n.jpg?_nc_ht=instagram.fcor2-2.fna.fbcdn.net&_nc_ohc=U6YW8k2zr-QAX-_Pzmy&tp=1&oh=85661b4a82c0e0480582dabb47ad9a4a&oe=605AACE0" class="imgFit">
+                            </div>
+                            <div class="usernameStorie">
+                                enunabaldosa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feed">
+                    <% posts.forEach(post =>{%>
+                    <div class="card">
+                        <div class="cardHeader">
+                            <div style="display: flex; align-items: center;">
+                                <div class="cardHeaderImg">
+                                    <img src="img/<%= post.posts.userImg%>" class="imgFit">
+                                </div>
+                                <span><b><%=post.user%></b></span>
+                            </div>
+                            <div style="position: relative;">
+                                <button class="cardAccion" name="<%= post._id %>" onclick="toogleAccion(name)">...</button>
+                                <div class="cardAccionWrapp" id="<%= post._id %>">
+                                    <% if (user.name == post.posts.name){%>
+                                        <form action="/post/delete/<%= post._id %>?_method=DELETE" method="POST">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="cardDelete">Eliminar</button>
+                                        </form>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cardImg">
+                            <img src="img/<%=post.imgPost%>" class="imgFit">
+                        </div>
+                        <div class="cardBody">
+                            <section>
+                                <div class="iconos">
+                                    <div style="display: flex;">
+                                    <i class="far fa-heart"></i>
+                                    <i class="far fa-comment"></i>
+                                    <i class="far fa-paper-plane"></i>
+                                    </div>
+                                    <div><i class="far fa-bookmark" style="margin-right: 0;"></i></div>
+                                    
+                                </div>
+                            </section>
+                            <section>
+                                <div class="cardLikes">3.500 likes</div>
+                            </section>
+                            <section>
+                                <span class="user"><%=post.user%></span>
+                                <span><%=post.pie%></span>
+                            </section>
+                            <section class="cardComments">
+                                View all comments
+                            </section>
+                            <section class="timestamp">Hace 23 minutos</section>
+                            <section class="commentUser">
+                                <form action="" method="POST">
+                                    <textarea name="" id="" placeholder="Inserte comentario"></textarea>
+                                    <button type="submit">Publicar</button>
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                    <%})%>
+                </div>
+            </div>
+            <!--ASIDE-->
+            <div class="aside">
+                <div style="position: fixed; width: 300px;top: auto; right: auto;">
+                <div class="asideUserInfo">
+                    <div class="asideUserImg">
+                        <img src="img/<%= user.userImg %>" class="imgFit">
+                    </div>
+                    <div>
+                        <a href="/<%= user.name %>">
+                            <div><b><%= user.name %></b></div>
+                            <div style="font-weight: 300; font-size: 14px;"><%= user.fullname %></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="newPost">
+                    <div style="display: flex; align-items: center;">
+                        <button class="showNewPost">+</button>
+                        <span>New Post</span>
+                    </div>
+                    <form action="/newPost" method="POST" class="formNewPost" enctype="multipart/form-data">
+                        <input type="text" name="pie" id="pie" placeholder="Inserte un pie de foto">
+                        <div class="divFile">
+                            <input type="file" class="file" name="imgPost">
+                        </div>
+                        <button class="btnNewPost" type="submit">Subir</button>
+                    </form>
+                </div>
+                <div class="sugerencias">
+                    <div class="sugerenciasHeader">
+                        <div><b>Sugerencias para ti</b></div>
+                        <div><b><small>Ver todo</small></b></div>
+                    </div>
+                    <div class="cuentaSugerida">
+                        <div style="display: flex; align-items: center;">
+                        <div class="imgSugerida">
+                            <img src="https://instagram.fcor2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/79194015_2294858047403322_3484940471178887168_n.jpg?_nc_ht=instagram.fcor2-2.fna.fbcdn.net&_nc_ohc=WUwTV8yoxIUAX-tVFew&tp=1&oh=278422f360cd6480962ce178af1fc521&oe=60585F90" class="imgFit">
+                        </div>
+                        <div>
+                            <div class="sugeridaName"><b>user</b></div>
+                            <div class="sugeridaFullname">fullname</div>
+                        </div>
+                        </div>
+                        <div><b><small>Seguir</small></b></div>
+                    </div>
+                    <div class="cuentaSugerida">
+                        <div style="display: flex; align-items: center;">
+                        <div class="imgSugerida">
+                            <img src="https://instagram.fcor2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/134516845_747918152514403_2284416033204004767_n.jpg?_nc_ht=instagram.fcor2-2.fna.fbcdn.net&_nc_ohc=xtGKe9v5_fIAX9-z67M&tp=1&oh=1abb8477ece2dbdf5c93eef898b77746&oe=605A925A" class="imgFit">
+                        </div>
+                        <div>
+                            <div class="sugeridaName"><b>user</b></div>
+                            <div class="sugeridaFullname">fullname</div>
+                        </div>
+                        </div>
+                        <div><b><small>Seguir</small></b></div>
+                    </div>
+                    <div class="cuentaSugerida">
+                        <div style="display: flex; align-items: center;">
+                        <div class="imgSugerida">
+                            <img src="https://instagram.fcor2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/20635364_350716132021473_1986655273296592896_a.jpg?_nc_ht=instagram.fcor2-2.fna.fbcdn.net&_nc_ohc=aNbPnjxxEGsAX-8BEvJ&tp=1&oh=f6c179580671dc9ab7a265097f5811c5&oe=605B0F97" class="imgFit">
+                        </div>
+                        <div>
+                            <div class="sugeridaName"><b>user</b></div>
+                            <div class="sugeridaFullname">fullname</div>
+                        </div>
+                        </div>
+                        <div><b><small>Seguir</small></b></div>
+                    </div>
+                </div>
+                <div class="copyrigth">
+                    @ 2021 INSTAGRAM FROM FACEBOOK
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const newPostButton = document.getElementsByClassName('showNewPost')[0]
+        const formNewPost = document.getElementsByClassName('formNewPost')[0]
+
+        newPostButton.addEventListener('click', () => {
+        formNewPost.classList.toggle('active')
+        });
+        /*
+        ########
+        */
+        function toogleAccion(name) {
+            name = name;
+            cardAccionWrapp = document.getElementsByClassName('cardAccionWrapp');
+
+            for(var i = 0; i < cardAccionWrapp.length; i++){
+                if (cardAccionWrapp[i].id == name){
+                    cardAccionWrapp[i].classList.toggle('active');
+                }
+            }
+       }
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
